@@ -1,0 +1,94 @@
+
+<html>
+<head>
+  <title>
+    T
+  </title>
+  <meta charset="utf-8"/>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="https://browserid.org/include.js"></script>
+  <script type="text/coffeescript">@@@</script>
+  <script
+    type="text/javascript"
+    src="http://docview.cnodejs.net/libs/coffee-script.js?js">
+  </script>
+  <style type="text/css">
+    body{
+      display: -webkit-box;
+      -webkit-box-oient: horizontal;
+      -webkit-box-pack: center;
+      padding: 0px auto;
+    }
+    #main_bar{
+      width: 800px;
+      height: 600px;
+      background: hsl(60,80%,90%);
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+    #side_bar{
+      width: 260px;
+      background: hsl(330,80%,90%);
+      padding: 13px 0px 300px;
+    }
+    .bookmark_area{
+    }
+    .time_area{
+    }
+    .content_area{
+    }
+    #show_new{
+      background: hsl(300,50%,70%);
+      width: 100px;
+    }
+    #show_post{
+      background: hsl(0,50%,80%);
+      width: 200px;
+    }
+    #show_all{
+      background: hsl(150,50%,80%);
+      width: 140px;
+    }
+    .label{
+      line-height: 24px;
+      padding: 4px;
+      margin: 20px 0px;
+      box-sizing: border-box;
+    }
+    textarea{
+      width: 100%;
+      height: 400px;
+    }
+    #post_button{
+      background-color: hsl(300,90%,90%);
+    }
+    .bookmark_wrap{
+      padding: 6px;
+    }
+    .bookmark_wrap:nth-child(2n){
+      background: hsl(300,96%,96%);
+    }
+    .bookmark_time{
+      color: hsl(0,90%,80%);
+    }
+    .bookmark_text{
+    }
+  </style>
+</head>
+<body>
+  <div id="main_bar">
+    <div id="post_area"></div>
+  </div>
+  <div id="side_bar">
+    <div id="show_new" class="label">
+      New
+    </div>
+    <div id="show_post" class="label">
+      Post
+    </div>
+    <div id="show_all" class="label">
+      All
+    </div>
+  </div>
+</body>
+</html>
