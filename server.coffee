@@ -3,7 +3,8 @@ ll = console.log
 my_email = 'jiyinyiyong@qq.com'
 
 fs = require 'fs'
-check_assertion = require 'browserid-verifier'
+# check_assertion = require 'browserid-verifier'
+check_assertion = (v...) -> ll 'rrr'
 crypto = require('ezcrypto').Crypto
 
 handler = (req, res) ->
@@ -62,6 +63,7 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
       do new_bookmarks
 
     socket.on 'assertion', (assertion) ->
+      ll 'calling assertion, will fail...'
       check_assertion
         assertion: assertion
         audience: 'http://localhost:8000'
@@ -72,10 +74,12 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
           else socket.emit 'login_err'
 
     socket.on 'check_local', (local) ->
+      ll 'on local...', local
       db.collection 'user', (err, collection) ->
         collection.findOne
           email: my_email, md5: user.md5
           (err, one_json) ->
+            ll one_json
             if one_json?
               sync_user_info my_email
             else socket.emit 'login_err'
