@@ -43,11 +43,9 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
     sync_user_info = (email) ->
       user.email = email
       user.md5 = crypto.MD5 (new Date).toString()
-
+      
       db.collection 'user', (err, collection) ->
-        collection.update
-          email: user.email
-          $set: {md5: user.md5}
+        collection.update {email: user.email}, {$set: {md5: user.md5}}
 
       socket.emit 'sync_user_info', user
       authed = yes
@@ -76,10 +74,11 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
     socket.on 'check_local', (local) ->
       ll 'on local...', local
       db.collection 'user', (err, collection) ->
-        collection.findOne
-          email: my_email, md5: user.md5
-          (err, one_json) ->
-            ll one_json
+        collection.find {}, (err, cursor) ->
+          cursor.each (err, x) ->
+            ll x if x?
+        collection.findOne {email: my_email, md5: local.md5}, (err, one_json) ->
+            ll err, one_json
             if one_json?
               sync_user_info my_email
             else socket.emit 'login_err'
