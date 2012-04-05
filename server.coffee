@@ -14,7 +14,7 @@ handler = (req, res) ->
   res.writeHead 200, 'content-Type': 'text/html'
   res.end html
 
-port = process.env.PORT || 8000
+port = 8000
 app = (require 'http').createServer handler
 app.listen port
 
@@ -61,9 +61,10 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
       do new_bookmarks
 
     socket.on 'assertion', (assertion) ->
+
       msg = query.stringify
         assertion: assertion
-        audience: 'localhost:8000'
+        audience: 'daily_bookmarks.nodejitsu.com'
       options =
         host: 'browserid.org'
         port: 443
@@ -79,6 +80,7 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
           str += chunk
         response.on 'end', ->
           id_data = JSON.parse str
+          ll id_data
           if id_data.email is my_email
             sync_user_info my_email
           else socket.emit 'login_err'
@@ -88,13 +90,13 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
       request.end()
 
     socket.on 'check_local', (local) ->
-      # ll 'on local...', local
+      ll 'on local...', local
       db.collection 'user', (err, collection) ->
         collection.find {}, (err, cursor) ->
           cursor.each (err, x) ->
             # ll x if x?
         collection.findOne {email: my_email, md5: local.md5}, (err, one_json) ->
-            # ll err, one_json
+            ll 'find from database', err, one_json
             if one_json?
               sync_user_info my_email
             else socket.emit 'login_err'
