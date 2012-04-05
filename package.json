@@ -4,14 +4,14 @@
   "scripts": {
     "start": "server.coffee"
   },
-  "version": "0.0.0-15",
+  "version": "0.0.0-18",
   "engines": {
     "node": "0.6.x"
   },
   "main": "server.js",
   "dependencies": {
     "mongodb": "0.9.9",
-    "socket.io": "0.8.7",
+    "socket.io": "0.9.3",
     "ezcrypto": "0.0.3"
   }
 }

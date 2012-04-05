@@ -3,9 +3,9 @@ ll = console.log
 my_email = 'jiyinyiyong@qq.com'
 
 fs = require 'fs'
-# check_assertion = require 'browserid-verifier'
-check_assertion = (v...) -> ll 'rrr'
 crypto = require('ezcrypto').Crypto
+query = require 'querystring'
+https = require 'https'
 
 handler = (req, res) ->
   html_file = fs.readFileSync 'page.html', 'utf-8'
@@ -61,24 +61,40 @@ url = 'mongodb://nodejs:nodejsPasswd@ds031617.mongolab.com:31617/jiyinyiyong'
       do new_bookmarks
 
     socket.on 'assertion', (assertion) ->
-      ll 'calling assertion, will fail...'
-      check_assertion
+      msg = query.stringify
         assertion: assertion
-        audience: 'http://localhost:8000'
-        (err, result) ->
-          throw err if err?
-          if result.email is my_email
+        audience: 'localhost:8000'
+      options =
+        host: 'browserid.org'
+        port: 443
+        path: '/verify'
+        method: 'POST'
+        headers:
+          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Length': msg.length
+
+      request = https.request options, (response) ->
+        str = ''
+        response.on 'data', (chunk) ->
+          str += chunk
+        response.on 'end', ->
+          id_data = JSON.parse str
+          if id_data.email is my_email
             sync_user_info my_email
           else socket.emit 'login_err'
+      request.on 'error', (data) ->
+        ll data
+      request.write msg
+      request.end()
 
     socket.on 'check_local', (local) ->
-      ll 'on local...', local
+      # ll 'on local...', local
       db.collection 'user', (err, collection) ->
         collection.find {}, (err, cursor) ->
           cursor.each (err, x) ->
-            ll x if x?
+            # ll x if x?
         collection.findOne {email: my_email, md5: local.md5}, (err, one_json) ->
-            ll err, one_json
+            # ll err, one_json
             if one_json?
               sync_user_info my_email
             else socket.emit 'login_err'
