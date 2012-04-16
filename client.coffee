@@ -116,6 +116,12 @@ authed = no
     (tag 'password').oninput = ->
       socket.emit 'password', @value
 
-socket.on 'login_work', ->
+socket.on 'login_work', (password_stemp) ->
+  localStorage.password_stemp  = password_stemp
   authed = yes
   do render_post
+
+if localStorage.password_stemp?
+  socket.emit 'password_stemp', localStorage.password_stemp
+socket.on 'password_stemp', ->
+  authed = yes

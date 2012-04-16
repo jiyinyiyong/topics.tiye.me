@@ -79,6 +79,31 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
       if password is 'pass'
         login_work = set_timeout 2, ->
           authed = yes
-          socket.emit 'login_work'
+          password_stemp = date_stemp()
+          db.collection 'password', (err, coll) ->
+            coll.drop()
+            coll.save {password: password_stemp}
+          socket.emit 'login_work', password_stemp
       else
         clearTimeout login_work
+
+    socket.on 'password_stemp', (password_stemp) ->
+      db.collection 'password', (err, coll) ->
+        coll.find({}).toArray (err, list) ->
+          if list[0].password is password_stemp
+            authed = yes
+            socket.emit 'password_stemp'
+
+    socket.on 'post_text', (post_text) ->
+      if authed
+        db.collection 'list', (err, coll) ->
+          time = new Date()
+          year = (String time.getFullYear())[2..]
+          month = time.getMonth() + 1
+          date = time.getDate()
+          hour = time.getHours()
+          minute = time.getMinutes()
+          time_stemp = "#{year}/#{month}/#{date}
+            #{hour}:#{minute}"
+          coll.save time:time_stemp, text:post_text 
+          do new_page
