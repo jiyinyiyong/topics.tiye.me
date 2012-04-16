@@ -16,18 +16,22 @@ create = (obj) ->
 
 socket = io.connect window.location.hostname
 
-socket.on 'start_stemp', (start_stemp) ->
-  local_start_stemp = localStorage.start_stemp
-  start_stemp = String start_stemp
-  localStorage.start_stemp = start_stemp
-  if local_start_stemp?
-    if local_start_stemp isnt start_stemp
-      window.location.reload()
+timer = ''
 
 set_interval 1, ->
   socket.emit 'watch_stemp'
-socket.on 'watch_stemp', (watch_stemp) ->
-  if (String watch_stemp) isnt localStorage.watch_stemp
-    localStorage.watch_stemp = String watch_stemp
+  timer = set_timeout 3, ->
+    do window.location.reload
+socket.on 'watch_stemp', (watch_stemp, start_stemp) ->
+  clearTimeout timer
+  if watch_stemp isnt localStorage.watch_stemp
+    localStorage.watch_stemp = watch_stemp
     set_timeout 1, ->
-      window.location.reload()
+      do window.location.reload
+  else if start_stemp isnt localStorage.start_stemp
+    localStorage.start_stemp = start_stemp
+    set_timeout 1, ->
+      do window.location.reload
+
+socket.on 'new_page', (list) ->
+  ll list

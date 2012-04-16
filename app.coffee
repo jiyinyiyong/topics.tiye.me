@@ -8,8 +8,9 @@ password: 'pass'
 coffee_path = '/home/chen/code/home/git/docview/libs/coffee-script.js'
 coffee_file = fs.readFileSync coffee_path, 'utf-8'
 
-start_stemp = (new Date()).getTime()
-watch_stemp = 0
+date_stemp = -> String (new Date())
+start_stemp = do date_stemp
+watch_stemp = do date_stemp
 
 page = ''
 client = ''
@@ -20,7 +21,8 @@ load_file = ->
 watch = require 'watch'
 watch.watchTree __dirname, (f, curr, prev) ->
   do load_file
-  watch_stemp += 1
+  watch_stemp = do date_stemp
+  ll 'refresh'
 
 app = (require 'http').createServer (req, res) ->
   pathname = (url.parse req.url).pathname
@@ -41,14 +43,14 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_bookmarks'
 (require 'mongodb').connect mongo, (err, db) ->
   io.sockets.on 'connection', (socket) ->
 
-    socket.emit 'start_stemp', start_stemp
     socket.on 'watch_stemp', ->
-      socket.emit 'watch_stemp', watch_stemp
+      socket.emit 'watch_stemp', watch_stemp, start_stemp
 
-    do visitor_new_page = ->
+    do new_page = ->
       db.collection 'list', (err, coll) ->
         coll.find {}, (err, cursor) ->
           list = []
-          cursor.each (item) ->
+          cursor.each (err, item) ->
+            ll err
             if item? then list.push item
-            else socket.emit 'visitor_new_page'
+            else socket.emit 'new_page', list
