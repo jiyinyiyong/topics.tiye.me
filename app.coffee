@@ -8,11 +8,6 @@ password: 'pass'
 coffee_path = '/home/chen/code/home/git/docview/libs/coffee-script.js'
 coffee_file = fs.readFileSync coffee_path, 'utf-8'
 
-<<<<<<< HEAD
-app = (require 'http').createServer (req, res) ->
-  page = fs.readFileSync 'page.html', 'utf-8'
-  client = fs.readFileSync 'client.coffee', 'utf-8'
-=======
 start_stemp = (new Date()).getTime()
 watch_stemp = 0
 
@@ -28,7 +23,6 @@ watch.watchTree __dirname, (f, curr, prev) ->
   watch_stemp += 1
 
 app = (require 'http').createServer (req, res) ->
->>>>>>> origin/master
   pathname = (url.parse req.url).pathname
   if pathname in ['/', '/index.html']
     res.writeHead 200, 'Content-Type':'text/html'
@@ -43,16 +37,6 @@ app = (require 'http').createServer (req, res) ->
 io = (require 'socket.io').listen app
 io.set 'log level', 1
 
-<<<<<<< HEAD
-mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
-(require 'mongodb').connect mongo, (err, db) ->
-  io.sockets.on 'connection', (socket) ->
-
-    db.collection 'list', (err, coll) ->
-      coll.find {}, (err, cursor) ->
-        list = []
-        cursor.each (item) ->
-=======
 mongo = 'mongodb://node:nodepass@localhost:27017/daily_bookmarks'
 (require 'mongodb').connect mongo, (err, db) ->
   io.sockets.on 'connection', (socket) ->
@@ -68,4 +52,3 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_bookmarks'
           cursor.each (item) ->
             if item? then list.push item
             else socket.emit 'visitor_new_page'
->>>>>>> origin/master

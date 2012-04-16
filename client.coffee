@@ -1,12 +1,9 @@
 
 ll = (v...) -> console.log vi for vi in v
-<<<<<<< HEAD
-=======
 set_interval = (duration, f) ->
   setInterval f, duration*1000
 set_timeout = (duration, f) ->
   setTimeout f, duration*1000
->>>>>>> origin/master
 
 tag = document.getElementById
 create = (obj) ->
@@ -18,12 +15,6 @@ create = (obj) ->
   return elem
 
 socket = io.connect window.location.hostname
-<<<<<<< HEAD
-socket.emit 'once'
-
-socket.on 'new_page', (list) ->
-  ll list, '000'
-=======
 
 socket.on 'start_stemp', (start_stemp) ->
   local_start_stemp = localStorage.start_stemp
@@ -40,4 +31,3 @@ socket.on 'watch_stemp', (watch_stemp) ->
     localStorage.watch_stemp = String watch_stemp
     set_timeout 1, ->
       window.location.reload()
->>>>>>> origin/master
