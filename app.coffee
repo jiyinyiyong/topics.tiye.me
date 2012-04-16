@@ -90,9 +90,10 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
     socket.on 'password_stemp', (password_stemp) ->
       db.collection 'password', (err, coll) ->
         coll.find({}).toArray (err, list) ->
-          if list[0].password is password_stemp
-            authed = yes
-            socket.emit 'password_stemp'
+          if list?
+            if list[0].password is password_stemp
+              authed = yes
+              socket.emit 'password_stemp'
 
     socket.on 'post_text', (post_text) ->
       if authed
@@ -107,3 +108,9 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
             #{hour}:#{minute}"
           coll.save time:time_stemp, text:post_text 
           do new_page
+
+    socket.on 'delete', (item_id) ->
+      if authed
+        ll item_id
+        db.collection 'list', (err, coll) ->
+          coll.remove {time: item_id}

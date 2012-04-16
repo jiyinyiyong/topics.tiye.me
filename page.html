@@ -7,6 +7,10 @@
       *{
         font-size: 14px;
         box-sizing: border-box;
+        font-family: 'wenquanyi micro hei'
+      }
+      code{
+        font-family: 'wenquanyi micro hei mono'
       }
       #page{
         width: 1000px;
@@ -18,8 +22,10 @@
         -webkit-box-orient: horizontal;
       }
       #list{
-        width:700px;
+        width:720px;
         background-color: hsl(0, 96%,96%)
+        overflow-x: hidden;
+        overflow-y: scroll;
       }
       #nav{
         width: 300px;
@@ -54,10 +60,9 @@
         color: hsl(320,80%,80%);
       }
       #list>*{
+        background: -webkit-gradient(
+          linear,0 0,0 100%,from(#fff),to(#eee));
         padding: 20px;
-      }
-      #list>*:nth-child(2n){
-        background-color: hsl(200,94%,96%);
       }
       #hint{
         line-height: 18px;
@@ -76,6 +81,27 @@
       #send_post{
         height: 30px;
         padding: 0px 10px;
+      }
+      pre{
+        padding: 6px;
+        margin: 0px;
+        background: -webkit-gradient(
+          linear,0 0,100% 100%,from(#fff),to(#ddd));
+      }
+      .code{
+        padding: 0px 6px;
+        background: -webkit-gradient(
+          linear,0 0,100% 100%,from(#fff),to(#ddd));
+      }
+      .bold{
+        font-weight: bold;
+      }
+      a{
+        text-decoration: none;
+      }
+      .delete{
+        margin: 0px 10px;
+        color: #ddd;
       }
     </style>
     <script type='text/coffeescript' src='client.coffee'>

@@ -36,17 +36,39 @@ socket.on 'watch_stemp', (watch_stemp, start_stemp) ->
     set_timeout 1, ->
       do window.location.reload
 
+authed = no
 append_list = (item) ->
   time = item.time
   text = item.text
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br/>')
-    .replace(/\s/g, '&nbsp;')
+  lines = text.split('\n').map (x) ->
+    x.replace(/^\s\s(.+)$/, '<pre><code>$1</code></pre>')
+  lines = lines.map (x) ->
+    x.replace(/`([^`]*[^\\`]+)`/g,
+      '<code class="code">$1</code>')
+      .replace(/(https?:(\/\/)?\S+)/g, '<a href="$1">$1</a>')
+      .replace(/#(\w+)#/g, '<span class="bold">$1</span>')
+  text = (lines.join '<br>')
+    .replace(/<\/code><\/pre><br><pre><code>/g, '\n')
+  ll text
   item_div = create tag: 'div'
-  html = "<span class='time'>#{time}</span><br>"
-  html+= "<div class='text'>#{text}</div>"
-  item_div.innerHTML = html
+  item_span = create tag:'span', clas:'time'
+  item_span.innerText = time
+  item_div.appendChild item_span
+  if authed
+    id_str = item.time
+    item_delete = create tag:'span', clas:'delete', id:id_str
+    item_delete.innerText = 'x'
+    item_div.appendChild item_delete
+    item_delete.onclick = ->
+      if confirm('Sure to delete?')
+        socket.emit 'delete', item.time
+        target = (tag id_str).parentNode
+        target.parentNode.removeChild target
+  item_text = create tag:'div', clas:'text'
+  item_text.innerHTML = text
+  item_div.appendChild item_text
   tag_list.appendChild item_div
 
 clear_list = ->
@@ -105,7 +127,6 @@ render_post = ->
   (tag 'send_post').onclick = ->
     socket.emit 'post_text', (tag 'post_text').value
 
-authed = no
 (tag 'post').onclick = ->
   if authed then do render_post
   else
