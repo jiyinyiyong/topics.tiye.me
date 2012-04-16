@@ -1,5 +1,9 @@
 
 ll = (v...) -> console.log vi for vi in v
+set_interval = (duration, f) ->
+  setInterval f, duration*1000
+set_timeout = (duration, f) ->
+  setTimeout f, duration*1000
 
 tag = document.getElementById
 create = (obj) ->
@@ -18,6 +22,12 @@ socket.on 'start_stemp', (start_stemp) ->
   localStorage.start_stemp = start_stemp
   if local_start_stemp?
     if local_start_stemp isnt start_stemp
-      do window.location.reload
-socket.on 'saved_event', ->
-  do window.location.reload
+      window.location.reload()
+
+set_interval 1, ->
+  socket.emit 'watch_stemp'
+socket.on 'watch_stemp', (watch_stemp) ->
+  if (String watch_stemp) isnt localStorage.watch_stemp
+    localStorage.watch_stemp = String watch_stemp
+    set_timeout 1, ->
+      window.location.reload()
