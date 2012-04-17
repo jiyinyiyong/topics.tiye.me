@@ -10,8 +10,8 @@ coffee_path = '/home/chen/git/docview/libs/coffee-script.js'
 coffee_file = fs.readFileSync coffee_path, 'utf-8'
 
 date_stemp = -> String (new Date())
-start_stemp = do date_stemp
 watch_stemp = do date_stemp
+start_start = do date_stemp
 
 page = ''
 client = ''
@@ -44,7 +44,7 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
   io.sockets.on 'connection', (socket) ->
 
     socket.on 'watch_stemp', ->
-      socket.emit 'watch_stemp', watch_stemp, start_stemp
+      socket.emit 'watch_stemp', watch_stemp, start_start
 
     do new_page = ->
       db.collection 'list', (err, coll) ->
@@ -114,3 +114,6 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
         ll item_id
         db.collection 'list', (err, coll) ->
           coll.remove {time: item_id}
+
+    socket.on 'report', (msg) ->
+      ll msg

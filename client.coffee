@@ -20,21 +20,20 @@ tag_nav  = tag 'nav'
 
 socket = io.connect window.location.hostname
 
-timer = ''
+timer = {}
 set_interval 1, ->
   socket.emit 'watch_stemp'
-  timer = set_timeout 2, ->
+  timer = set_timeout 1, ->
     do window.location.reload
+    clearTimeout timer
 socket.on 'watch_stemp', (watch_stemp, start_stemp) ->
   clearTimeout timer
+  if start_stemp isnt localStorage.start_stemp
+    localStorage.start_stemp = start_stemp
+    localStorage.watch_stemp = watch_stemp
   if watch_stemp isnt localStorage.watch_stemp
     localStorage.watch_stemp = watch_stemp
-    set_timeout 1, ->
-      do window.location.reload
-  else if start_stemp isnt localStorage.start_stemp
-    localStorage.start_stemp = start_stemp
-    set_timeout 1, ->
-      do window.location.reload
+    do window.location.reload
 
 authed = no
 append_list = (item) ->
@@ -51,7 +50,6 @@ append_list = (item) ->
       .replace(/#(\w+)#/g, '<span class="bold">$1</span>')
   text = (lines.join '<br>')
     .replace(/<\/code><\/pre><br><pre><code>/g, '\n')
-  ll text
   item_div = create tag: 'div'
   item_span = create tag:'span', clas:'time'
   item_span.innerText = time
