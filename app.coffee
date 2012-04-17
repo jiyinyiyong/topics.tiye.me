@@ -6,9 +6,6 @@ set_timeout = (duration, f) ->
 fs = require 'fs'
 url = require 'url'
 
-coffee_path = '/home/chen/git/docview/libs/coffee-script.js'
-coffee_file = fs.readFileSync coffee_path, 'utf-8'
-
 date_stemp = -> String (new Date())
 watch_stemp = do date_stemp
 start_start = do date_stemp
@@ -34,9 +31,6 @@ app = (require 'http').createServer (req, res) ->
   else if pathname is '/client.coffee'
     res.writeHead 200, 'Content-Type':'text/coffeescript'
     res.end client
-  else if pathname is '/coffee-script.js'
-    res.writeHead 200, 'Content-Type':'text/javascript'
-    res.end coffee_file
   else if pathname is '/all.json'
     res.writeHead 200, 'Content-Type': 'application/json'
     (require 'mongodb').connect lab, (err, db) ->

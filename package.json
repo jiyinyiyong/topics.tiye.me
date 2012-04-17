@@ -1,0 +1,16 @@
+{
+  "name": "daily_notes",
+  "subdomain": "daily_notes",
+  "scripts": {
+    "start": "app.coffee"
+  },
+  "version": "0.0.0-4",
+  "engines": {
+    "node": "0.6.x"
+  },
+  "dependencies": {
+    "socket.io": "0.9.3",
+    "mongodb": "0.9.9",
+    "watch": "0.5.1"
+  }
+}
