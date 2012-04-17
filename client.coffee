@@ -36,6 +36,7 @@ socket.on 'watch_stemp', (watch_stemp, start_stemp) ->
     do window.location.reload
 
 authed = no
+if localStorage.password_stemp then authed = yes
 append_list = (item) ->
   time = item.time
   text = item.text
@@ -84,14 +85,12 @@ socket.on 'new_page', (list) ->
 (tag 'search').onmouseout = ->
   @blur()
 (tag 'search').onkeydown = (event) ->
+  ll event.keyCode
   if @selectionStart is @selectionEnd
-    if event.keyCode is 13
-      socket.emit 'search', @value.trim()
-      return false
-    else if event.keyCode is 32
+    if event.keyCode in [13, 32, 229]
       socket.emit 'search', @value.trim()
     else if event.keyCode is 8
-      find_tail = @value.match /^(.*)\s\S+\s?$/
+      find_tail = @value.match /^(.*)\s\S+\s*?$/
       if find_tail?
         @value = find_tail[1]
         return false

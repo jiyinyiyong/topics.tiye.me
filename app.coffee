@@ -53,7 +53,9 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
             socket.emit 'new_page', list
 
     socket.on 'search', (keywords) ->
-      keys = (keywords.split ' ').map (x) -> "(#{x})"
+      keys = keywords.split(' ').filter (x) ->
+        if x.length > 0 then true else false
+      keys = keys.map (x) -> "(#{x})"
       try
         keys = keys.map (x) -> new RegExp x
       catch error
@@ -100,20 +102,22 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
         db.collection 'list', (err, coll) ->
           time = new Date()
           year = (String time.getFullYear())[2..]
-          month = time.getMonth() + 1
-          date = time.getDate()
-          hour = time.getHours()
-          minute = time.getMinutes()
+          month = String (time.getMonth() + 1)
+          if month.length is 1 then month = '0'+month
+          date = String time.getDate()
+          if date.length is 1 then date = '0'+date
+          hour = String time.getHours()
+          if hour.length is 1 then hour = '0'+hour
+          minute = String time.getMinutes()
+          if minute.length is 1 then minute = '0'+minute
+          second = String time.getSeconds()
+          if second.length is 1 then second = '0'+second
           time_stemp = "#{year}/#{month}/#{date}
-            #{hour}:#{minute}"
+            #{hour}:#{minute}:#{second}"
           coll.save time:time_stemp, text:post_text 
           do new_page
 
     socket.on 'delete', (item_id) ->
       if authed
-        ll item_id
         db.collection 'list', (err, coll) ->
           coll.remove {time: item_id}
-
-    socket.on 'report', (msg) ->
-      ll msg

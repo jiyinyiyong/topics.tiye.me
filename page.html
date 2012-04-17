@@ -15,20 +15,19 @@
       #page{
         width: 1000px;
         min-height: 600px;
-        background-color: hsl(200,96%,96%);
+        background-color: hsl(200,96%,100%);
         margin: 0px auto;
         height: 100%;
         display: -webkit-box;
         -webkit-box-orient: horizontal;
       }
       #list{
-        width:720px;
-        background-color: hsl(0, 96%,96%)
+        width:780px;
         overflow-x: hidden;
         overflow-y: scroll;
       }
       #nav{
-        width: 300px;
+        width: 200px;
       }
       #nav>*{
         margin: 20px 0px;
@@ -59,10 +58,13 @@
       .time{
         color: hsl(320,80%,80%);
       }
-      #list>*{
+      #list>*{/*
         background: -webkit-gradient(
-          linear,0 0,0 100%,from(#fff),to(#eee));
-        padding: 20px;
+          linear,0 0,0 100%,from(#fff),to(#eee));*/
+        margin: 0px 0px 20px;
+        padding: 10px 0px;
+        line-height: 26px;
+        background-color: hsl(240,100%,98%);
       }
       #hint{
         line-height: 18px;
@@ -82,16 +84,10 @@
         height: 30px;
         padding: 0px 10px;
       }
-      pre{
-        padding: 6px;
+      .code, pre{
+        padding: 4px;
         margin: 0px;
-        background: -webkit-gradient(
-          linear,0 0,100% 100%,from(#fff),to(#ddd));
-      }
-      .code{
-        padding: 0px 6px;
-        background: -webkit-gradient(
-          linear,0 0,100% 100%,from(#fff),to(#ddd));
+        background-color: hsl(40,40%,90%);
       }
       .bold{
         font-weight: bold;
