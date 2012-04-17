@@ -24,6 +24,8 @@ watch.watchTree __dirname, (f, curr, prev) ->
   do load_file
   watch_stemp = do date_stemp
 
+mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
+lab = 'mongodb://node:nodepass@ds031617.mongolab.com:31617/jiyinyiyong'
 app = (require 'http').createServer (req, res) ->
   pathname = (url.parse req.url).pathname
   if pathname in ['/', '/index.html']
@@ -35,12 +37,23 @@ app = (require 'http').createServer (req, res) ->
   else if pathname is '/coffee-script.js'
     res.writeHead 200, 'Content-Type':'text/javascript'
     res.end coffee_file
+  else if pathname is '/all.json'
+    res.writeHead 200, 'Content-Type': 'application/json'
+    (require 'mongodb').connect lab, (err, db) ->
+      db.collection 'list', (err, coll) ->
+        coll.find({},{_id:0}).toArray (err, list) ->
+          for item in list
+            json = []
+            for key, value of item
+              json.push "\"#{key}\":\"#{value}\""
+            res.write "{#{json.join ','}}\n"
+          res.end ''
+    
 .listen 8000
 io = (require 'socket.io').listen app
 io.set 'log level', 1
 
-mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
-(require 'mongodb').connect mongo, (err, db) ->
+(require 'mongodb').connect lab, (err, db) ->
   io.sockets.on 'connection', (socket) ->
 
     socket.on 'watch_stemp', ->
@@ -57,7 +70,7 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
         if x.length > 0 then true else false
       keys = keys.map (x) -> "(#{x})"
       try
-        keys = keys.map (x) -> new RegExp x
+        keys = keys.map (x) -> new RegExp x, 'i'
       catch error
         keys = [/empty/]
       # ll keys
@@ -92,10 +105,13 @@ mongo = 'mongodb://node:nodepass@localhost:27017/daily_notes'
     socket.on 'password_stemp', (password_stemp) ->
       db.collection 'password', (err, coll) ->
         coll.find({}).toArray (err, list) ->
-          if list?
-            if list[0].password is password_stemp
-              authed = yes
-              socket.emit 'password_stemp'
+          try
+            if list?
+              if list[0].password is password_stemp
+                authed = yes
+                socket.emit 'password_stemp'
+          catch error
+            coll.save {password: 'empty'}
 
     socket.on 'post_text', (post_text) ->
       if authed
