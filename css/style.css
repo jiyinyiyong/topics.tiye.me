@@ -78,6 +78,10 @@ button#submit {
     flex-direction: column;
     height: 60px;
     padding: 5px 20px;
+    position: relative;
+}
+.topic:hover {
+    background: rgb(248, 248, 248);
 }
 
 .topic .title {
@@ -88,8 +92,29 @@ button#submit {
     content: "no title";
 }
 
-.topic .link a {
+.topic a.link {
     display: inline-block;
     font-size: 12px;
     text-decoration: none;
+}
+
+.topic .note input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    width: 80%;
+    background-color: transparent;
+}
+
+.topic .delete {
+    right: 6px;
+    position: absolute;
+    font-size: 10px;
+    color: rgb(255, 186, 186);
+    cursor: pointer;
+    top: 4px;
+}
+
+.topic .delete:hover {
+    color: red;
 }

@@ -30,6 +30,14 @@ window.app = new Vue
     logout: ->
       ajax.req 'POST', '/logout'
       @logined = no
+    update: (topic) ->
+      id = topic._id
+      data =
+        note: topic.note
+      ajax.req 'PUT', "/topic/#{id}", data
+    remove: (id, index) ->
+      @topics.splice index, 1
+      ajax.req 'DELETE', "/topic/#{id}"
 
 ajax.handleError (data) ->
   console.log 'error', data
