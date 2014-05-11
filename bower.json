@@ -16,7 +16,8 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "vue": "~0.10.4"
   }
 }
