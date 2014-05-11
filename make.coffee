@@ -1,5 +1,5 @@
 #!/usr/bin/env coffee
-project = 'repo/topics.tiye.me'
+project = 'localrepo.tiye.me'
 
 require 'shelljs/make'
 path = require 'path'
@@ -72,6 +72,7 @@ target.sync = ->
       dest: 'tiye:~/repo/topics.tiye.me/'
       exclude: [
         'node_modules/'
+        'bower_components/'
         'coffee'
         'README.md'
         'coffee'

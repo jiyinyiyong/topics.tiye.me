@@ -69,7 +69,7 @@ button#submit {
 #paper {
     display: flex;
     flex-direction: column;
-    width: 800px;
+    width: 960px;
     margin: 0 auto;
 }
 
@@ -77,33 +77,39 @@ button#submit {
     display: flex;
     flex-direction: column;
     height: 60px;
-    padding: 5px 20px;
+    padding: 12px 21px 10px;
     position: relative;
 }
 .topic:hover {
-    background: rgb(248, 248, 248);
+    box-shadow: -2px 0px 0px rgb(170, 113, 255);
 }
 
 .topic .title {
     height: 20px;
+    font-family: "Optima", "Hirogina Sans GB";
 }
 
-.topic .title:empty {
-    content: "no title";
+.topic .date {
+    font-size: 12px;
+    margin-left: 14px;
+    color: rgb(180, 180, 180);
 }
 
 .topic a.link {
-    display: inline-block;
-    font-size: 12px;
     text-decoration: none;
 }
 
-.topic .note input {
+.topic a.link:hover {
+    text-decoration: underline;
+}
+
+.topic .note, .topic .note input {
     border: none;
     outline: none;
     font-size: 13px;
     width: 80%;
     background-color: transparent;
+    color: rgb(187, 187, 187);
 }
 
 .topic .delete {

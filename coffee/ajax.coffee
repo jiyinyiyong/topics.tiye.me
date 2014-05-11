@@ -1,5 +1,6 @@
 
-apiHost = 'http://local.tiye.me'
+# apiHost = 'http://local.tiye.me'
+apiHost = 'http://topics-api.tiye.me'
 
 local =
   handle: (x) ->

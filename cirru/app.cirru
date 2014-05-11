@@ -5,12 +5,12 @@
     .topic
       :v-repeat topic:topics
       .title
-        span
-          :v-text topic.title
         a.link
           :href {{topic.url}}
           :target _blank
-          :v-text topic.url
+          :v-text topic.title
+        span.date
+          :v-text "topic.time | short"
       .note
         :v-if !logined
         span

@@ -1,5 +1,12 @@
 
 ajax = require './ajax'
+try
+  password = localStorage.getItem 'password'
+window.onbeforeunload = ->
+  localStorage.setItem 'password', app.$data.password
+
+Vue.filter 'short', (time) ->
+  (new Date time).toDateString()
 
 window.app = new Vue
   el: '#body'
@@ -8,7 +15,7 @@ window.app = new Vue
     wantLogin: no
     name: 'anonym'
     topics: []
-    password: ''
+    password: password or ''
   methods:
     load: (list) ->
       @topics = list
