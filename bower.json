@@ -1,0 +1,22 @@
+{
+  "name": "topics.tiye.me",
+  "version": "0.0.0",
+  "homepage": "https://github.com/tiye/topics.tiye.me",
+  "authors": [
+    "jiyinyiyong <jiyinyiyong@gmail.com>"
+  ],
+  "keywords": [
+    "bookmarks"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "vue": "~0.10.4"
+  }
+}

@@ -1,16 +1,30 @@
 {
-  "name": "daily_notes",
-  "subdomain": "daily_notes",
-  "scripts": {
-    "start": "app.coffee"
-  },
-  "version": "0.0.0-4",
-  "engines": {
-    "node": "0.6.x"
-  },
+  "name": "topics.tiye.me",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
   "dependencies": {
-    "socket.io": "0.9.3",
-    "mongodb": "0.9.9",
-    "watch": "0.5.1"
-  }
+    "express": "~4.1.2",
+    "mongoose": "~3.8.9"
+  },
+  "devDependencies": {
+    "mission": "~0.0.2-0",
+    "shelljs": "~0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tiye/topics.tiye.me.git"
+  },
+  "keywords": [
+    "bookmark"
+  ],
+  "author": "jiyinyiyong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tiye/topics.tiye.me/issues"
+  },
+  "homepage": "https://github.com/tiye/topics.tiye.me"
 }
