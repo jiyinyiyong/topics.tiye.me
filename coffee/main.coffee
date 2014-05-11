@@ -1,5 +1,5 @@
 
-apiHost = 'http://local.tiye.me'
+ajax = require './ajax'
 
 window.app = new Vue
   el: '#body'
@@ -17,39 +17,25 @@ window.app = new Vue
     auth: ->
       data =
         password: @password
-      $.ajax
-        url: "#{apiHost}/auth"
-        type: 'POST'
-        data: data
-        xhrFields:
-          withCredentials: true
-        success: (res) =>
-          if res.status?
-            @authName res.name
-          else
-            console.log res
-            alert JSON.stringify res
-        error: (event) ->
-          console.log event
-          alert "failed: #{event.response}"
+      ajax.req 'POST', '/auth', data, (res) =>
+        if res.status?
+          @authName res.name
+        else
+          console.log res
+          alert JSON.stringify res
     authName: (name) ->
       @name = name
       @logined = yes
       @wantLogin = no
     logout: ->
-      $.ajax
-        url: "#{apiHost}/logout"
-        type: 'POST'
-        xhrFields:
-          withCredentials: true
+      ajax.req 'POST', '/logout'
       @logined = no
 
-$.ajax
-  url: "#{apiHost}/topics"
-  type: 'GET'
-  xhrFields:
-    withCredentials: true
-  success: (data) ->
-    if data.name?
-      app.authName data.name
-    app.load data.list
+ajax.handleError (data) ->
+  console.log 'error', data
+
+ajax.req 'GET', '/topics', (list) ->
+  app.load list
+
+ajax.req 'GET', '/name', (data) ->
+  app.authName data.name
