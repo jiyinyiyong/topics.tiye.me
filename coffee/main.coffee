@@ -12,6 +12,7 @@ window.app = new Vue
   el: '#body'
   data:
     logined: no
+    hasMore: yes
     wantLogin: no
     name: 'anonym'
     topics: []
@@ -45,6 +46,14 @@ window.app = new Vue
     remove: (id, index) ->
       @topics.splice index, 1
       ajax.req 'DELETE', "/topic/#{id}"
+    loadMore: ->
+      lastOne = @topics[@topics.length - 1]
+      time = (new Date lastOne.time).valueOf()
+      ajax.req 'GET', "/topics/#{time}", (list) =>
+        if list.length > 0
+          @topics.push list...
+        else
+          @hasMore = no
 
 ajax.handleError (data) ->
   console.log 'error', data

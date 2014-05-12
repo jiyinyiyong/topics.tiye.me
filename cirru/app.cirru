@@ -24,3 +24,7 @@
         :v-if logined
         :v-on "click: remove(topic._id, $index)"
         = Delete
+    #has-more
+      :v-if hasMore
+      :v-on "click: loadMore"
+      = "More"

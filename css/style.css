@@ -124,3 +124,10 @@ button#submit {
 .topic .delete:hover {
     color: red;
 }
+
+#has-more {
+    padding: 20px;
+    font-family: "Helvetica";
+    font-weight: 100;
+    cursor: pointer;
+}

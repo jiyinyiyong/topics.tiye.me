@@ -1,6 +1,7 @@
 
-# apiHost = 'http://local.tiye.me'
-apiHost = 'http://topics-api.tiye.me'
+host = location.host
+host = host.replace /topics/, 'topics-api'
+apiHost = "http://#{host}"
 
 local =
   handle: (x) ->
