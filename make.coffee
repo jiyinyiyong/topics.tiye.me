@@ -65,7 +65,7 @@ target.pre = ->
     options:
       at: 'prerelease'
 
-target.sync = ->
+target.rsync = ->
   mission.rsync
     file: './'
     options:

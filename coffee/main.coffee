@@ -52,7 +52,7 @@ window.app = new Vue
       ajax.req 'GET', "/topics/#{time}", (list) =>
         if list.length > 0
           @topics.push list...
-        else
+        if list.length < 20
           @hasMore = no
 
 ajax.handleError (data) ->
@@ -60,6 +60,14 @@ ajax.handleError (data) ->
 
 ajax.req 'GET', '/topics', (list) ->
   app.load list
+  if list.length < 20
+    app.$data.hasMore = no
 
 ajax.req 'GET', '/name', (data) ->
   app.authName data.name
+
+window.onfocus = ->
+  ajax.req 'GET', '/topics', (list) ->
+    for topic in list.reverse()
+      unless topic in app.$data.topics
+        app.$data.topics.unshift topic
