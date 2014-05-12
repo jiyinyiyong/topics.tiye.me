@@ -63,7 +63,17 @@ button#submit {
 
 
 #main {
-    padding: 100px 0px 400px;
+    padding: 40px 0px 400px;
+}
+
+#search {
+    margin: 30px 30px;
+    line-height: 30px;
+    font-size: 20px;
+    border: none;
+    font-family: Helvetica;
+    font-weight: 100;
+    outline: none;
 }
 
 #paper {

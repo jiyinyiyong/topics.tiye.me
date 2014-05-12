@@ -17,6 +17,7 @@ window.app = new Vue
     name: 'anonym'
     topics: []
     password: password or ''
+    query: ''
   methods:
     load: (list) ->
       @topics = list
@@ -54,6 +55,13 @@ window.app = new Vue
           @topics.push list...
         if list.length < 20
           @hasMore = no
+    search: ->
+      @query = @query.trim()
+      if @query.length > 1
+        data =
+          query: @query
+        ajax.req 'GET', '/search', data, (list) =>
+          @topics = list
 
 ajax.handleError (data) ->
   console.log 'error', data

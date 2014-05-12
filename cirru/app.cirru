@@ -2,6 +2,9 @@
 #main
   :v-if !wantLogin
   #paper
+    input#search
+      :v-model query
+      :v-on "keydown:search | key enter"
     .topic
       :v-repeat topic:topics
       .title
