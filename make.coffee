@@ -23,19 +23,29 @@ target.coffee = ->
     options:
       bare: yes
 
-cirru = ->
-  mission.cirru
-    file: 'index.cirru', from: 'cirru/', to: './', extname: '.html'
+cirru = (data) ->
+  mission.cirruHtml
+    file: 'index.cirru'
+    from: 'cirru/'
+    to: './'
+    extname: '.html'
+    data: data
 
 browserify = (callback) ->
   mission.browserify
     file: 'main.js', from: 'js/', to: 'build/', done: callback
 
-target.cirru = -> cirru()
+target.cirru = -> cirru inDev: yes
+target.cirruBuild = -> cirru inBuild: yes
 target.browserify = -> browserify()
 
-target.compile = ->
-  cirru()
+target.dev = ->
+  cirru inDev: yes
+  target.coffee yes
+  browserify()
+
+target.build = ->
+  cirru inBuild: yes
   target.coffee yes
   browserify()
 
@@ -47,7 +57,7 @@ target.watch = ->
     trigger: (filepath, extname) ->
       switch extname
         when '.cirru'
-          cirru()
+          cirru inDev: yes
           station.reload project
         when '.coffee'
           filepath = path.relative 'coffee/', filepath
@@ -58,23 +68,24 @@ target.watch = ->
           browserify ->
             station.reload project
 
-target.pre = ->
-  target.compile()
+target.patch = ->
   mission.bump
     file: 'package.json'
     options:
-      at: 'prerelease'
+      at: 'patch'
 
 target.rsync = ->
+  target.build()
   mission.rsync
     file: './'
+    dest: 'tiye:~/repo/topics.tiye.me/'
     options:
-      dest: 'tiye:~/repo/topics.tiye.me/'
       exclude: [
         'node_modules/'
         'bower_components/'
         'coffee'
         'README.md'
-        'coffee'
         'js'
+        '.git/'
+        'png/*.jpg'
       ]
