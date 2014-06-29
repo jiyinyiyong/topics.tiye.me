@@ -18,7 +18,7 @@
   ],
   "devDependencies": {},
   "dependencies": {
-    "vue": "~0.10.4",
-    "jquery": "~2.1.1"
+    "react": "~0.10.0",
+    "origami-ui": "git@github.com:mvc-works/origami-ui.git"
   }
 }
