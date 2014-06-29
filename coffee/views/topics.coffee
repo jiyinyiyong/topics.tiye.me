@@ -1,6 +1,6 @@
 
 mixins = require '../utils/mixins'
-
+TopicItem = require './topic'
 topicsModel = require '../models/topics'
 
 module.exports = React.createClass
@@ -30,9 +30,10 @@ module.exports = React.createClass
 
     $.div
       id: 'topic-list'
+      className: 'app-page'
       topicsContent
-      unless @state.searching
-        unless @state.loaded
+      unless @state.loaded
+        unless @state.searching
           $.div
             className: 'more'
             'More'

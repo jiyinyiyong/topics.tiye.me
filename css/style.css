@@ -1,5 +1,13 @@
 
 body, input {
     color: black;
-    background: rgb(243, 243, 243);
+}
+
+#user-view {
+    text-align: right;
+    padding: 20px 10px;
+}
+
+.topic-note {
+    width: 100%;
 }

@@ -2,19 +2,20 @@
 mixins = require '../utils/mixins'
 
 userModel = require '../models/user'
+action = require '../action'
 
 module.exports = React.createClass
   displayName: 'topics-item'
   mixins: [mixins.listenTo]
 
-  getIntialState: ->
+  getInitialState: ->
     logined: userModel.isLogined()
 
   componentDidMount: ->
     @listenTo userModel, @_onChange
 
   _onChange: ->
-    @setState @getIntialState()
+    @setState @getInitialState()
 
   render: ->
 
@@ -25,10 +26,18 @@ module.exports = React.createClass
             @props.data.title
           $.span className: 'topic-time',
             @props.data.time
-        $.div
+        $.input
           contentEditable: yes
           className: 'topic-note'
-          $props.data.note
+          value: @props.data.note
+          ref: 'note'
+          onBlur: =>
+            topic = @props.data
+            topic.note = @refs.note.getDOMNode().value
+            action.topic topic
       $.div
         className: 'topic-remove'
+        onClick: =>
+          topicId = @props.data._id
+          action.delete topicId
         if @state.logined then 'Delete'
