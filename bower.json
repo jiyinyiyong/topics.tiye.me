@@ -19,6 +19,7 @@
   "devDependencies": {},
   "dependencies": {
     "react": "~0.10.0",
-    "origami-ui": "git@github.com:mvc-works/origami-ui.git"
+    "origami-ui": "git@github.com:mvc-works/origami-ui.git",
+    "jquery": "~2.1.1"
   }
 }
