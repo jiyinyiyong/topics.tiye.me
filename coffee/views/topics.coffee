@@ -21,7 +21,6 @@ module.exports = React.createClass
     @listenTo topicsModel, @_onChange
 
   render: ->
-    console.log @state
     if @state.searching
       topicsToRender = @state.results
     else

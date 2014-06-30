@@ -37,7 +37,9 @@ body, input {
     font-size: 14px;
 }
 
-.topic-title {}
+.topic-title {
+    text-decoration: none;
+}
 
 .topic-more {
     cursor: pointer;

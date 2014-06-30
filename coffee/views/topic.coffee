@@ -23,7 +23,10 @@ module.exports = React.createClass
     $.div className: 'topic-item row-between',
       $.div className: 'column-align',
         $.div {},
-          $.span className: 'topic-title',
+          $.a
+            className: 'topic-title'
+            href: @props.data.url
+            target: '_blank'
             @props.data.title
           $.span className: 'topic-time',
             @props.data.time
