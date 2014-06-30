@@ -13,6 +13,7 @@ module.exports = React.createClass
 
   componentDidMount: ->
     @listenTo userModel, @_onChange
+    @refs.note.getDOMNode().value = @props.data.note or ''
 
   _onChange: ->
     @setState @getInitialState()
@@ -29,7 +30,6 @@ module.exports = React.createClass
         $.input
           contentEditable: yes
           className: 'topic-note'
-          value: @props.data.note
           ref: 'note'
           onBlur: =>
             topic = @props.data

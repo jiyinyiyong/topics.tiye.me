@@ -12,8 +12,8 @@ html
     @if (@ inDev) $ @block
       script (:src bower_components/jquery/dist/jquery.js)
       script (:src bower_components/react/react.js)
-    @if (@ inBuild)
-      script (:src http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js)
-      script (:src http://cdn.staticfile.org/react/0.10.0/react.min.js)
+    @if (@ inBuild) $ @block
+      script (:src //cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js)
+      script (:src //cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.min.js)
     script (:defer) (:src build/main.js)
   body

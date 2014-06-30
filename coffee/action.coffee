@@ -19,3 +19,12 @@ exports.topic = (data) ->
 
 exports.delete = (id) ->
   topicsModel.deleteTopic id
+
+exports.more = ->
+  topicsModel.more()
+
+exports.load = ->
+  topicsModel.load()
+
+exports.query = (text) ->
+  topicsModel.search text

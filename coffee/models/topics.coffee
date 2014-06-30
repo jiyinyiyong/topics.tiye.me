@@ -1,6 +1,7 @@
 
 Dispatcher = require '../utils/dispatcher'
 ajax = require '../utils/ajax'
+format = require '../utils/format'
 
 module.exports = model = new Dispatcher
 
@@ -11,17 +12,14 @@ local =
   results: []
 
 model.getTopics = ->
-  local.topics.sort (a, b) =>
-    b.time - a.time
+  format.byTime local.topics
 
 model.getResults = ->
-  local.results.sort (a ,b) =>
-    b.time - a.time
+  format.byTime local.results
 
 model.load = ->
   if local.loaded then return
   ajax.req 'GET', '/topics', (topics) =>
-    if topics.length < 20 then local.loaded = yes
     model.merge topics
 
 model.more = ->
@@ -31,7 +29,8 @@ model.more = ->
       if topic.time < time then time = topic.time
     else
       time = topic.time
-  if loaded.loaded then return
+  time = (new Date time).valueOf()
+  if local.loaded then return
   ajax.req 'GET', "/topics/#{time}", (topics) =>
     if topics.length < 20 then local.loaded = yes
     model.merge topics

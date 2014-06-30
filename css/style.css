@@ -10,4 +10,35 @@ body, input {
 
 .topic-note {
     width: 100%;
+    color: gray;
+}
+
+#topic-list {
+    margin-bottom: 300px;
+}
+
+.topic-remove {
+    color: red;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.topic-item {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.topic-item:hover {
+    box-shadow: -1px 0 0 gray;
+}
+
+.topic-time {
+    color: gainsboro;
+    font-size: 14px;
+}
+
+.topic-title {}
+
+.topic-more {
+    cursor: pointer;
 }
